@@ -1,0 +1,35 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "docker-run",
+        "type": "shell",
+        "command": "docker",
+        "args": [
+          "run",
+          "--rm",
+          "-it",
+          "-v",
+          "~/.aws:/home/glue_user/.aws",
+          "-v",
+          "${workspaceFolder}:/home/glue_user/workspace/",
+          "-e",
+          "AWS_PROFILE=$PROFILE_NAME",
+          "-e",
+          "DISABLE_SSL=true",
+          "--name",
+          "glue_spark_submit",
+          "amazon/aws-glue-libs:glue_libs_4.0.0_image_01",
+          "spark-submit",
+          "/home/glue_user/workspace/src/daily_return.py",
+          "--JOB_NAME",
+          "sample"
+        ],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        }
+      }
+    ]
+  }
+  
